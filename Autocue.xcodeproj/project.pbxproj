@@ -13,6 +13,7 @@
 		22797C572A4880C600EAFB82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22797C552A4880C600EAFB82 /* Main.storyboard */; };
 		22797C592A4880C700EAFB82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22797C582A4880C700EAFB82 /* Assets.xcassets */; };
 		22797C5C2A4880C700EAFB82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */; };
+		22797C642A4884E900EAFB82 /* HappyCow.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22797C632A4884E900EAFB82 /* HappyCow.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		22797C582A4880C700EAFB82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22797C5B2A4880C700EAFB82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22797C5D2A4880C700EAFB82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22797C632A4884E900EAFB82 /* HappyCow.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyCow.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		22797C4E2A4880C600EAFB82 /* Autocue */ = {
 			isa = PBXGroup;
 			children = (
+				22797C632A4884E900EAFB82 /* HappyCow.mp4 */,
 				22797C4F2A4880C600EAFB82 /* AppDelegate.swift */,
 				22797C512A4880C600EAFB82 /* SceneDelegate.swift */,
 				22797C532A4880C600EAFB82 /* ViewController.swift */,
@@ -127,6 +130,7 @@
 			files = (
 				22797C5C2A4880C700EAFB82 /* LaunchScreen.storyboard in Resources */,
 				22797C592A4880C700EAFB82 /* Assets.xcassets in Resources */,
+				22797C642A4884E900EAFB82 /* HappyCow.mp4 in Resources */,
 				22797C572A4880C600EAFB82 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +299,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,6 +328,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
