@@ -14,6 +14,8 @@
 		22797C592A4880C700EAFB82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22797C582A4880C700EAFB82 /* Assets.xcassets */; };
 		22797C5C2A4880C700EAFB82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */; };
 		22797C642A4884E900EAFB82 /* HappyCow.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22797C632A4884E900EAFB82 /* HappyCow.mp4 */; };
+		22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C652A530B6700EAFB82 /* PlayVideo.swift */; };
+		48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		22797C5B2A4880C700EAFB82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22797C5D2A4880C700EAFB82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22797C632A4884E900EAFB82 /* HappyCow.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyCow.mp4; sourceTree = "<group>"; };
+		22797C652A530B6700EAFB82 /* PlayVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayVideo.swift; sourceTree = "<group>"; };
+		59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.release.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.release.xcconfig"; sourceTree = "<group>"; };
+		AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.debug.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.debug.xcconfig"; sourceTree = "<group>"; };
+		F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autocue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +51,8 @@
 			children = (
 				22797C4E2A4880C600EAFB82 /* Autocue */,
 				22797C4D2A4880C600EAFB82 /* Products */,
+				BF57FC70B655C0AD4DB70211 /* Pods */,
+				FB80FC02990EC23C85FE566F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,8 +75,27 @@
 				22797C582A4880C700EAFB82 /* Assets.xcassets */,
 				22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */,
 				22797C5D2A4880C700EAFB82 /* Info.plist */,
+				22797C652A530B6700EAFB82 /* PlayVideo.swift */,
 			);
 			path = Autocue;
+			sourceTree = "<group>";
+		};
+		BF57FC70B655C0AD4DB70211 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */,
+				59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FB80FC02990EC23C85FE566F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +105,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22797C602A4880C700EAFB82 /* Build configuration list for PBXNativeTarget "Autocue" */;
 			buildPhases = (
+				11870A77020B26FF2ADDCEE3 /* [CP] Check Pods Manifest.lock */,
 				22797C482A4880C600EAFB82 /* Sources */,
 				22797C492A4880C600EAFB82 /* Frameworks */,
 				22797C4A2A4880C600EAFB82 /* Resources */,
+				AFF75B5E2FCDF187E2E07652 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -137,6 +167,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		11870A77020B26FF2ADDCEE3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Autocue-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFF75B5E2FCDF187E2E07652 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Autocue/Pods-Autocue-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Autocue/Pods-Autocue-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Autocue/Pods-Autocue-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		22797C482A4880C600EAFB82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -145,6 +217,7 @@
 				22797C542A4880C600EAFB82 /* ViewController.swift in Sources */,
 				22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */,
 				22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */,
+				22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +359,7 @@
 		};
 		22797C612A4880C700EAFB82 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -315,6 +389,7 @@
 		};
 		22797C622A4880C700EAFB82 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
