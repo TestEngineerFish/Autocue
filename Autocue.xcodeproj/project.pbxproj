@@ -3,18 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C4F2A4880C600EAFB82 /* AppDelegate.swift */; };
 		22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C512A4880C600EAFB82 /* SceneDelegate.swift */; };
-		22797C542A4880C600EAFB82 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C532A4880C600EAFB82 /* ViewController.swift */; };
+		22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C532A4880C600EAFB82 /* HomeViewController.swift */; };
 		22797C572A4880C600EAFB82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22797C552A4880C600EAFB82 /* Main.storyboard */; };
 		22797C592A4880C700EAFB82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22797C582A4880C700EAFB82 /* Assets.xcassets */; };
 		22797C5C2A4880C700EAFB82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */; };
 		22797C642A4884E900EAFB82 /* HappyCow.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22797C632A4884E900EAFB82 /* HappyCow.mp4 */; };
 		22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C652A530B6700EAFB82 /* PlayVideo.swift */; };
+		22C0F3622A6D63D7007D7E48 /* BPCueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3612A6D63D7007D7E48 /* BPCueModel.swift */; };
+		22C0F3682A6EBFB3007D7E48 /* BPDatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3642A6EBFB3007D7E48 /* BPDatabaseProtocol.swift */; };
+		22C0F3692A6EBFB3007D7E48 /* BPSQLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3652A6EBFB3007D7E48 /* BPSQLManager.swift */; };
+		22C0F36A2A6EBFB3007D7E48 /* BPDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3662A6EBFB3007D7E48 /* BPDatabaseManager.swift */; };
+		22C0F36B2A6EBFB3007D7E48 /* BPIMDBOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3672A6EBFB3007D7E48 /* BPIMDBOperator.swift */; };
+		22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */; };
 		48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,13 +28,19 @@
 		22797C4C2A4880C600EAFB82 /* Autocue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Autocue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22797C4F2A4880C600EAFB82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22797C512A4880C600EAFB82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		22797C532A4880C600EAFB82 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		22797C532A4880C600EAFB82 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		22797C562A4880C600EAFB82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		22797C582A4880C700EAFB82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22797C5B2A4880C700EAFB82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22797C5D2A4880C700EAFB82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22797C632A4884E900EAFB82 /* HappyCow.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyCow.mp4; sourceTree = "<group>"; };
 		22797C652A530B6700EAFB82 /* PlayVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayVideo.swift; sourceTree = "<group>"; };
+		22C0F3612A6D63D7007D7E48 /* BPCueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPCueModel.swift; sourceTree = "<group>"; };
+		22C0F3642A6EBFB3007D7E48 /* BPDatabaseProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPDatabaseProtocol.swift; path = Database/BPDatabaseProtocol.swift; sourceTree = "<group>"; };
+		22C0F3652A6EBFB3007D7E48 /* BPSQLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPSQLManager.swift; path = Database/BPSQLManager.swift; sourceTree = "<group>"; };
+		22C0F3662A6EBFB3007D7E48 /* BPDatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPDatabaseManager.swift; path = Database/BPDatabaseManager.swift; sourceTree = "<group>"; };
+		22C0F3672A6EBFB3007D7E48 /* BPIMDBOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPIMDBOperator.swift; path = Database/BPIMDBOperator.swift; sourceTree = "<group>"; };
+		22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.release.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.release.xcconfig"; sourceTree = "<group>"; };
 		AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.debug.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.debug.xcconfig"; sourceTree = "<group>"; };
 		F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autocue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,10 +79,12 @@
 		22797C4E2A4880C600EAFB82 /* Autocue */ = {
 			isa = PBXGroup;
 			children = (
+				22C0F36C2A6EC01D007D7E48 /* Feature */,
+				22C0F3602A6D63C4007D7E48 /* Model */,
+				22C0F3552A6C10C7007D7E48 /* Database */,
 				22797C632A4884E900EAFB82 /* HappyCow.mp4 */,
 				22797C4F2A4880C600EAFB82 /* AppDelegate.swift */,
 				22797C512A4880C600EAFB82 /* SceneDelegate.swift */,
-				22797C532A4880C600EAFB82 /* ViewController.swift */,
 				22797C552A4880C600EAFB82 /* Main.storyboard */,
 				22797C582A4880C700EAFB82 /* Assets.xcassets */,
 				22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */,
@@ -80,13 +94,40 @@
 			path = Autocue;
 			sourceTree = "<group>";
 		};
+		22C0F3552A6C10C7007D7E48 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				22C0F3662A6EBFB3007D7E48 /* BPDatabaseManager.swift */,
+				22C0F3642A6EBFB3007D7E48 /* BPDatabaseProtocol.swift */,
+				22C0F3672A6EBFB3007D7E48 /* BPIMDBOperator.swift */,
+				22C0F3652A6EBFB3007D7E48 /* BPSQLManager.swift */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		22C0F3602A6D63C4007D7E48 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				22C0F3612A6D63D7007D7E48 /* BPCueModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		22C0F36C2A6EC01D007D7E48 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				22797C532A4880C600EAFB82 /* HomeViewController.swift */,
+				22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */,
+			);
+			name = Feature;
+			sourceTree = "<group>";
+		};
 		BF57FC70B655C0AD4DB70211 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */,
 				59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -109,7 +150,7 @@
 				22797C482A4880C600EAFB82 /* Sources */,
 				22797C492A4880C600EAFB82 /* Frameworks */,
 				22797C4A2A4880C600EAFB82 /* Resources */,
-				AFF75B5E2FCDF187E2E07652 /* [CP] Embed Pods Frameworks */,
+				2A1E5470DC74F5383161345B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,7 +177,7 @@
 				};
 			};
 			buildConfigurationList = 22797C472A4880C600EAFB82 /* Build configuration list for PBXProject "Autocue" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -190,7 +231,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AFF75B5E2FCDF187E2E07652 /* [CP] Embed Pods Frameworks */ = {
+		2A1E5470DC74F5383161345B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -214,10 +255,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22797C542A4880C600EAFB82 /* ViewController.swift in Sources */,
+				22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */,
+				22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */,
+				22C0F3692A6EBFB3007D7E48 /* BPSQLManager.swift in Sources */,
 				22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */,
+				22C0F3682A6EBFB3007D7E48 /* BPDatabaseProtocol.swift in Sources */,
+				22C0F36A2A6EBFB3007D7E48 /* BPDatabaseManager.swift in Sources */,
+				22C0F36B2A6EBFB3007D7E48 /* BPIMDBOperator.swift in Sources */,
 				22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */,
 				22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */,
+				22C0F3622A6D63D7007D7E48 /* BPCueModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -347,7 +394,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -365,7 +412,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 35QFLB7H5A;
+				DEVELOPMENT_TEAM = 7M4S44CE7D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Autocue/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -373,7 +420,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -381,6 +428,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sam.ty.Autocue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -395,7 +445,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 35QFLB7H5A;
+				DEVELOPMENT_TEAM = 7M4S44CE7D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Autocue/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -403,7 +453,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -411,6 +461,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sam.ty.Autocue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -2,7 +2,7 @@ import UIKit
 import AVKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     private var playerViewController: AVPlayerViewController?
     
@@ -16,6 +16,12 @@ class ViewController: UIViewController {
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         playButton.center = view.center
         view.addSubview(playButton)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController")
+        self.navigationController?.pushViewController(editViewController, animated: true)
     }
     
     @objc func playButtonTapped() {
