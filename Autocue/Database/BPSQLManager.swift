@@ -46,10 +46,12 @@ public struct BPSQLManager {
         case insertCue =
         """
         INSERT INTO cue(
+            create_time,
+            update_time, 
             cue_id,
-            titile,
+            title,
             content)
-        VALUES (?,?,?);
+        VALUES (?,?,?,?,?);
         """
         case updateCue =
         """

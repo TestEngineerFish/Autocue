@@ -21,6 +21,8 @@
 		22C0F36A2A6EBFB3007D7E48 /* BPDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3662A6EBFB3007D7E48 /* BPDatabaseManager.swift */; };
 		22C0F36B2A6EBFB3007D7E48 /* BPIMDBOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3672A6EBFB3007D7E48 /* BPIMDBOperator.swift */; };
 		22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */; };
+		22C0F3712A769A49007D7E48 /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3702A769A49007D7E48 /* HomeCollectionCell.swift */; };
+		22C0F3732A76A837007D7E48 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3722A76A837007D7E48 /* Utils.swift */; };
 		48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,8 @@
 		22C0F3662A6EBFB3007D7E48 /* BPDatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPDatabaseManager.swift; path = Database/BPDatabaseManager.swift; sourceTree = "<group>"; };
 		22C0F3672A6EBFB3007D7E48 /* BPIMDBOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BPIMDBOperator.swift; path = Database/BPIMDBOperator.swift; sourceTree = "<group>"; };
 		22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		22C0F3702A769A49007D7E48 /* HomeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionCell.swift; sourceTree = "<group>"; };
+		22C0F3722A76A837007D7E48 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.release.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.release.xcconfig"; sourceTree = "<group>"; };
 		AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.debug.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.debug.xcconfig"; sourceTree = "<group>"; };
 		F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autocue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +94,7 @@
 				22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */,
 				22797C5D2A4880C700EAFB82 /* Info.plist */,
 				22797C652A530B6700EAFB82 /* PlayVideo.swift */,
+				22C0F3722A76A837007D7E48 /* Utils.swift */,
 			);
 			path = Autocue;
 			sourceTree = "<group>";
@@ -116,10 +121,19 @@
 		22C0F36C2A6EC01D007D7E48 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
-				22797C532A4880C600EAFB82 /* HomeViewController.swift */,
+				22C0F36F2A769A34007D7E48 /* Home */,
 				22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */,
 			);
 			name = Feature;
+			sourceTree = "<group>";
+		};
+		22C0F36F2A769A34007D7E48 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				22797C532A4880C600EAFB82 /* HomeViewController.swift */,
+				22C0F3702A769A49007D7E48 /* HomeCollectionCell.swift */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 		BF57FC70B655C0AD4DB70211 /* Pods */ = {
@@ -255,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C0F3712A769A49007D7E48 /* HomeCollectionCell.swift in Sources */,
 				22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */,
 				22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */,
 				22C0F3692A6EBFB3007D7E48 /* BPSQLManager.swift in Sources */,
@@ -265,6 +280,7 @@
 				22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */,
 				22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */,
 				22C0F3622A6D63D7007D7E48 /* BPCueModel.swift in Sources */,
+				22C0F3732A76A837007D7E48 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

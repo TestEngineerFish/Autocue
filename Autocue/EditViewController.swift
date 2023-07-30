@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EditViewController: UIViewController, UITextViewDelegate {
+class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var rightBar: UIBarButtonItem!
     
@@ -45,14 +45,17 @@ class EditViewController: UIViewController, UITextViewDelegate {
     }
     
     private func initData() {
+        textField.text = model.title
         textView.text = model.content
     }
     
     // MARK: ==== Event ====
     
     @IBAction func clickRight(_ sender: UIBarButtonItem) {
-        BPIMDBOperator.default.insertCue(model: model)
         textView.resignFirstResponder()
+        textField.resignFirstResponder()
+        BPIMDBOperator.default.insertCue(model: model)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func play(_ sender: UIButton) {
@@ -73,5 +76,11 @@ class EditViewController: UIViewController, UITextViewDelegate {
             textView.text = "请输入提示词"
             textView.textColor = UIColor.lightGray
         }
+        model.content = textView.text
+    }
+    
+    // MARK: ==== UITextField ====
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        model.title = textField.text ?? ""
     }
 }

@@ -57,6 +57,8 @@ class BPIMDBOperator: BPIMDBProtocol, BPDatabaseProtocol {
     @discardableResult
     func insertCue(model: BPCueModel) -> Bool {
         let values = [model.id,
+                      model.createTime,
+                      model.updateTime,
                       model.title,
                       model.content] as [Any]
         let sql    = BPSQLManager.CueOperate.insertCue.rawValue
