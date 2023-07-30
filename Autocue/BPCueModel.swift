@@ -9,14 +9,18 @@ import Foundation
 import ObjectMapper
 
 struct BPCueModel: Mappable {
-    var id: String = "0"
+    var id: String
     var createTime: Date = Date()
     var updateTime: Date = Date()
     var title: String = ""
     var content: String = ""
     
-    init() {}
-    init?(map: ObjectMapper.Map) {}
+    init() {
+        id = "\(Date().timeIntervalSince1970)"
+    }
+    init?(map: ObjectMapper.Map) {
+        id = "\(Date().timeIntervalSince1970)"
+    }
     
     mutating func mapping(map: ObjectMapper.Map) {
         id          <- map["id"]

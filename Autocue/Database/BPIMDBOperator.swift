@@ -12,13 +12,17 @@ protocol BPIMDBProtocol {
     // 单例操作对象
     static var `default`: BPIMDBOperator { get }
 
-    // MARK: 最近会话表操作
+    // MARK: 操作
+    /// 保存
+    func saveCue(model: BPCueModel) -> Bool
+    /// 查询
+    func selectCue(id: String) -> BPCueModel?
     /// 插入
     func insertCue(model: BPCueModel) -> Bool
-    /// 查询所有最近会话记录
-    func selectAllCue() -> [BPCueModel]
-    /// 更新最近会话记录
+    /// 更新
     func updateCue(model: BPCueModel) -> Bool
+    /// 查询所有
+    func selectAllCue() -> [BPCueModel]
 }
 
 extension BPIMDBProtocol {
@@ -28,18 +32,49 @@ extension BPIMDBProtocol {
 class BPIMDBOperator: BPIMDBProtocol, BPDatabaseProtocol {
 
     // MARK: ==== Session ====
+    
+    func saveCue(model: BPCueModel) -> Bool {
+        if let _ = selectCue(id: model.id) {
+            return updateCue(model: model)
+        } else {
+            return insertCue(model: model)
+        }
+    }
+    
+    func selectCue(id: String) -> BPCueModel? {
+        var model: BPCueModel?
+        let sql = BPSQLManager.CueOperate.selectCue.rawValue
+        guard let result = self.normalRunner.executeQuery(sql, withArgumentsIn: []) else {
+            return model
+        }
+        while result.next() {
+            model = self.transformCueModel(result: result)
+            break
+        }
+        return model
+    }
+    
     @discardableResult
     func insertCue(model: BPCueModel) -> Bool {
         let values = [model.id,
-                      model.createTime,
-                      model.updateTime,
                       model.title,
                       model.content] as [Any]
-        let sql    = BPSQLManager.CueOperate.insertSession.rawValue
+        let sql    = BPSQLManager.CueOperate.insertCue.rawValue
         let result = self.normalRunner.executeUpdate(sql, withArgumentsIn: values)
         return result
     }
 
+    @discardableResult
+    func updateCue(model: BPCueModel) -> Bool {
+        let params = [model.updateTime,
+                      model.title,
+                      model.content,
+                      model.id] as [Any]
+        let sql    = BPSQLManager.CueOperate.updateCue.rawValue
+        let result = self.normalRunner.executeUpdate(sql, withArgumentsIn: params)
+        return result
+    }
+    
     func selectAllCue() -> [BPCueModel] {
         var modelList = [BPCueModel]()
         let sql = BPSQLManager.CueOperate.selectAllCue.rawValue
@@ -52,19 +87,6 @@ class BPIMDBOperator: BPIMDBProtocol, BPDatabaseProtocol {
         }
         return modelList
     }
-
-    @discardableResult
-    func updateCue(model: BPCueModel) -> Bool {
-        let params = [model.createTime,
-                      model.updateTime,
-                      model.title,
-                      model.content,
-                      model.id] as [Any]
-        let sql    = BPSQLManager.CueOperate.updateCue.rawValue
-        let result = self.normalRunner.executeUpdate(sql, withArgumentsIn: params)
-        return result
-    }
-
 
     // MARK: ==== Tools ====
     private func transformCueModel(result: FMResultSet) -> BPCueModel {

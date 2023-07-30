@@ -14,28 +14,15 @@ class EditViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var playButton: UIButton!
     
+    @IBOutlet weak var textField: UITextField!
+    
     @IBOutlet weak var textView: UITextView!
+    
+    var model = BPCueModel()
     
     
     enum Status {
         case review, edit
-    }
-    
-    private var status: Status = .review {
-        willSet {
-            switch newValue {
-            case .review:
-                rightBar.title = "编辑"
-                playButton.isHidden = false
-                title = "预览"
-                textView.resignFirstResponder()
-            case .edit:
-                rightBar.title = "保存"
-                playButton.isHidden = true
-                title = "编辑中……"
-                textView.becomeFirstResponder()
-            }
-        }
     }
     
     override func viewDidLoad() {
@@ -47,22 +34,25 @@ class EditViewController: UIViewController, UITextViewDelegate {
     // MARK: ==== init ====
     private func initUI() {
         playButton.layer.cornerRadius = playButton.frame.height/2
+        
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        textField.layer.cornerRadius = 5
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        textView.layer.cornerRadius = 5
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     }
     
     private func initData() {
-        self.status = .review
+        textView.text = model.content
     }
     
     // MARK: ==== Event ====
     
     @IBAction func clickRight(_ sender: UIBarButtonItem) {
-        switch status {
-        case .edit:
-            status = .review
-        case .review:
-            status = .edit
-        }
+        BPIMDBOperator.default.insertCue(model: model)
+        textView.resignFirstResponder()
     }
     
     @IBAction func play(_ sender: UIButton) {
@@ -75,7 +65,7 @@ class EditViewController: UIViewController, UITextViewDelegate {
             textView.text = nil
             textView.textColor = UIColor.black
         }
-        self.status = .edit
+        
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
