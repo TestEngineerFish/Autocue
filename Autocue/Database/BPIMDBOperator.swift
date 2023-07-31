@@ -23,6 +23,8 @@ protocol BPIMDBProtocol {
     func updateCue(model: BPCueModel) -> Bool
     /// 查询所有
     func selectAllCue() -> [BPCueModel]
+    /// 删除
+    func deleteCue(id: String) -> Bool
 }
 
 extension BPIMDBProtocol {
@@ -88,6 +90,13 @@ class BPIMDBOperator: BPIMDBProtocol, BPDatabaseProtocol {
             modelList.append(model)
         }
         return modelList
+    }
+    
+    @discardableResult
+    func deleteCue(id: String) -> Bool {
+        let sql = BPSQLManager.CueOperate.deleteCue.rawValue
+        let result = self.normalRunner.executeUpdate(sql, withArgumentsIn: [id])
+        return result
     }
 
     // MARK: ==== Tools ====

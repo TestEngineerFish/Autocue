@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--首页-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Autocue" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,16 +52,22 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GEa-1A-e6P" secondAttribute="bottom" id="fEf-oa-6UR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="o3X-nF-Hck">
+                    <navigationItem key="navigationItem" title="首页" id="o3X-nF-Hck">
+                        <barButtonItem key="leftBarButtonItem" title="编辑" id="UyD-Cx-Ho7">
+                            <connections>
+                                <action selector="leftAction:" destination="BYZ-38-t0r" id="yfr-CG-dEM"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="添加" id="fQW-KX-TL7">
                             <connections>
-                                <action selector="addCue:" destination="BYZ-38-t0r" id="ejI-9F-8B8"/>
-                                <segue destination="bsT-Li-fga" kind="show" id="TmK-8D-wFF"/>
+                                <action selector="rightAction:" destination="BYZ-38-t0r" id="urL-ja-tgi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GEa-1A-e6P" id="F74-kk-HWe"/>
+                        <outlet property="leftItem" destination="UyD-Cx-Ho7" id="Xgx-z7-EFD"/>
+                        <outlet property="rightItem" destination="fQW-KX-TL7" id="Z2i-bS-y02"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -165,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTU-Zk-v6w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2286" y="-723"/>
+            <point key="canvasLocation" x="2781" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ltb-lb-eCh">
@@ -183,7 +189,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QXF-Lt-9QO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1376" y="-723"/>
+            <point key="canvasLocation" x="1871" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7br-wj-ipr">
@@ -204,9 +210,6 @@
             <point key="canvasLocation" x="136.64122137404578" y="3.5211267605633805"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="TmK-8D-wFF"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -32,7 +32,6 @@ class HomeCollectionCell: UICollectionViewCell {
         return label
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.initUI()
@@ -45,6 +44,8 @@ class HomeCollectionCell: UICollectionViewCell {
     
     // MARK: ==== Init ====
     private func initUI() {
+        layer.cornerRadius = 15
+        layer.masksToBounds = true
         addSubview(titleLabel)
         addSubview(contentLabel)
         addSubview(timeLabel)
@@ -64,6 +65,18 @@ class HomeCollectionCell: UICollectionViewCell {
             make.top.greaterThanOrEqualTo(contentLabel.snp_bottomMargin).offset(5).priority(1000)
         }
     }
+    
+    override func select(_ sender: Any?) {
+        if isSelected {
+            self.layer.borderColor = UIColor.green.cgColor
+            self.layer.borderWidth = 2
+        } else {
+            self.layer.borderColor = UIColor.clear.cgColor
+            self.layer.borderWidth = 0
+        }
+        super.select(sender)
+    }
+
     
     // MARK: ==== Event ====
     func setData(model: BPCueModel) {

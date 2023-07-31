@@ -14,7 +14,7 @@ public struct BPSQLManager {
     public static let createCueTables = [
         CreateCueTableSQLs.cue.rawValue]
     
-    // MARK: 创建表
+    // MARK: 创建
     /// 创建需要的表结构
     enum CreateCueTableSQLs: String {
         case cue =
@@ -30,8 +30,7 @@ public struct BPSQLManager {
         """
     }
     
-    // MARK: IM表
-    // TODO: ==== Session ====
+    // MARK: 操作
     enum CueOperate: String {
         case selectAllCue =
         """
@@ -46,27 +45,27 @@ public struct BPSQLManager {
         case insertCue =
         """
         INSERT INTO cue(
-            create_time,
-            update_time, 
-            cue_id,
-            title,
-            content)
+        create_time,
+        update_time,
+        cue_id,
+        title,
+        content)
         VALUES (?,?,?,?,?);
         """
         case updateCue =
         """
         UPDATE cue
         SET update_time = ?,
-            title = ?,
-            content = ?
+        title = ?,
+        content = ?
         WHERE cue_id = ?
         """
-        case deleteSession =
+        case deleteCue =
         """
         DELETE FROM cue
         WHERE cue_id = ?
         """
-        case deleteAllSession =
+        case deleteAllCue =
         """
         DELETE FROM cue
         """

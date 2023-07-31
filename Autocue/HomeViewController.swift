@@ -4,8 +4,29 @@ import AVFoundation
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    enum EditType {
+        case normal, edit
+    }
     
+    @IBOutlet weak var leftItem: UIBarButtonItem!
+    @IBOutlet weak var rightItem: UIBarButtonItem!
     private var modelList = [BPCueModel]()
+    private var editType: EditType = .normal {
+        willSet {
+            switch newValue {
+            case .normal:
+                leftItem.isEnabled = true
+                leftItem.title = "编辑"
+                rightItem.title = "删除"
+            case .edit:
+                leftItem.isEnabled = false
+                leftItem.title = ""
+                rightItem.title = "添加"
+            }
+        }
+    }
+    private var selectedModelList = [BPCueModel]()
+    
 //    private var playerViewController: AVPlayerViewController?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -13,6 +34,25 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.reloadData()
+    }
+    
+    @IBAction func leftAction(_ sender: UIBarButtonItem) {
+        if editType == .normal {
+            self.editType = .edit
+            sender.isEnabled = false
+            sender.title = ""
+            rightItem.title = "删除"
+        }
+    }
+    
+    @IBAction func rightAction(_ sender: UIBarButtonItem) {
+        switch editType {
+        case .normal:
+            pushEditVC(model: nil)
+        case .edit:
+            removeModelList()
+            editType = .normal
+        }
     }
     
     override func viewDidLoad() {
@@ -52,6 +92,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         let size = CGSize(width: (collectionView.bounds.width - layout.minimumInteritemSpacing)/2, height: 200)
         layout.itemSize = size
         collectionView.collectionViewLayout = layout
+        collectionView.contentInset = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
     }
     private func initData() {
         collectionView.register(HomeCollectionCell.classForCoder(), forCellWithReuseIdentifier: "HomeCollectionCell")
@@ -63,6 +104,21 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.reloadData()
     }
     
+    private func pushEditVC(model: BPCueModel?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
+            if let _model = model {
+                editViewController.model = _model
+            }
+            self.navigationController?.pushViewController(editViewController, animated: true)
+        }
+    }
+    
+    private func removeModelList() {
+        modelList.forEach { model in
+            BPIMDBOperator.default.deleteCue(id: model.id)
+        }
+    }
     
     // MARK: ==== Delegate、DataSource ====
     
@@ -80,12 +136,15 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
-            editViewController.model = modelList[indexPath.row]
-            self.navigationController?.pushViewController(editViewController, animated: true)
-        }
+        pushEditVC(model: modelList[indexPath.row])
     }
+    
+    func collectionView(_ collectionView: UICollectionView, canEditItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    
 //    func composeVideoWithText(text: String, duration: TimeInterval) {
 //        let videoURL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("textVideo.mp4")
 //
