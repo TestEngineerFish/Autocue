@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class HomeCollectionCell: UICollectionViewCell {
+    var model: BPCueModel?
     
     var titleLabel: UILabel = {
         let label = UILabel()
@@ -66,22 +67,21 @@ class HomeCollectionCell: UICollectionViewCell {
         }
     }
     
-    override func select(_ sender: Any?) {
-        if isSelected {
-            self.layer.borderColor = UIColor.green.cgColor
-            self.layer.borderWidth = 2
-        } else {
-            self.layer.borderColor = UIColor.clear.cgColor
-            self.layer.borderWidth = 0
-        }
-        super.select(sender)
-    }
-
     
     // MARK: ==== Event ====
-    func setData(model: BPCueModel) {
-        titleLabel.text = model.title
-        contentLabel.text = model.content
-        timeLabel.text = model.updateTime.formatIMMessageTime()
+    func setData(model: BPCueModel, isSelected: Bool) {
+        self.model          = model
+        titleLabel.text     = model.title
+        contentLabel.text   = model.content
+        timeLabel.text      = model.updateTime.formatIMMessageTime()
+        if isSelected {
+            layer.borderColor   = UIColor.orange.cgColor
+            layer.borderWidth   = 2
+            backgroundColor     = .white
+        } else {
+            layer.borderColor   = UIColor.clear.cgColor
+            layer.borderWidth   = 0
+            backgroundColor     = .orange
+        }
     }
 }

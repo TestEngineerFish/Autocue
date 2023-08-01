@@ -10,19 +10,21 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @IBOutlet weak var leftItem: UIBarButtonItem!
     @IBOutlet weak var rightItem: UIBarButtonItem!
+    
     private var modelList = [BPCueModel]()
+    private var selectedIdList: Set<String> = []
+    
     private var editType: EditType = .normal {
         willSet {
             switch newValue {
             case .normal:
-                leftItem.isEnabled = true
                 leftItem.title = "编辑"
-                rightItem.title = "删除"
-            case .edit:
-                leftItem.isEnabled = false
-                leftItem.title = ""
                 rightItem.title = "添加"
+            case .edit:
+                leftItem.title = "取消"
+                rightItem.title = "删除"
             }
+            collectionView.reloadData()
         }
     }
     private var selectedModelList = [BPCueModel]()
@@ -37,11 +39,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     @IBAction func leftAction(_ sender: UIBarButtonItem) {
-        if editType == .normal {
-            self.editType = .edit
-            sender.isEnabled = false
-            sender.title = ""
-            rightItem.title = "删除"
+        switch editType {
+        case .normal:
+            editType = .edit
+        case .edit:
+            editType = .normal
+            selectedIdList.removeAll()
         }
     }
     
@@ -50,7 +53,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         case .normal:
             pushEditVC(model: nil)
         case .edit:
-            removeModelList()
+            selectedIdList.forEach { id in
+                BPIMDBOperator.default.deleteCue(id: id)
+            }
+            reloadData()
             editType = .normal
         }
     }
@@ -114,12 +120,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    private func removeModelList() {
-        modelList.forEach { model in
-            BPIMDBOperator.default.deleteCue(id: model.id)
-        }
-    }
-    
     // MARK: ==== Delegate、DataSource ====
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -131,18 +131,25 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             return UICollectionViewCell()
         }
         let model = modelList[indexPath.row]
-        cell.setData(model: model)
+        cell.setData(model: model, isSelected: selectedIdList.contains(model.id))
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        pushEditVC(model: modelList[indexPath.row])
+        switch editType {
+        case .normal:
+            pushEditVC(model: modelList[indexPath.row])
+        case .edit:
+            let id = modelList[indexPath.row].id
+            if selectedIdList.contains(id) {
+                selectedIdList.remove(id)
+                collectionView.deleteItems(at: [indexPath])
+            } else {
+                selectedIdList.insert(id)
+                collectionView.reloadItems(at: [indexPath])
+            }
+        }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, canEditItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     
     
 //    func composeVideoWithText(text: String, duration: TimeInterval) {

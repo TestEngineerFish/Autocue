@@ -47,6 +47,8 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     private func initData() {
         textField.text = model.title
         textView.text = model.content
+        textView.text = "请输入提示词"
+        textView.textColor = UIColor.lightGray
     }
     
     // MARK: ==== Event ====
