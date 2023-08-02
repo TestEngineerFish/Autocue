@@ -47,8 +47,10 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     private func initData() {
         textField.text = model.title
         textView.text = model.content
-        textView.text = "请输入提示词"
-        textView.textColor = UIColor.lightGray
+        if textView.text.isEmpty {
+            textView.text = "请输入提示词"
+            textView.textColor = UIColor.lightGray
+        }
     }
     
     // MARK: ==== Event ====
@@ -61,7 +63,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     }
     
     @IBAction func play(_ sender: UIButton) {
-        
+        PlayManager.share.play(model: model)
     }
     
     // MARK: ==== UITextViewDelegate ====
