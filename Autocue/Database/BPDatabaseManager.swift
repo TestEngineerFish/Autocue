@@ -46,7 +46,7 @@ public class BPDatabaseManager {
     /// - Throws: 构造失败异常
     private func cueRunner() throws -> FMDatabase {
         let filePath = self.dbFilePath(fileName: BPDatabaseType.cue.rawValue)
-        print(filePath)
+//        print(filePath)
         return try createRunner(type: .cue, filePath: filePath, sqls: BPSQLManager.createCueTables)
     }
 
