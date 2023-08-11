@@ -61,9 +61,9 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
         BPIMDBOperator.default.insertCue(model: model)
         self.navigationController?.popViewController(animated: true)
     }
-    var manager = PlayManager(frame: .zero)
+
     @IBAction func play(_ sender: UIButton) {
-        manager.play(model: model)
+        PlayManager.share.play(model: model)
     }
     
     // MARK: ==== UITextViewDelegate ====

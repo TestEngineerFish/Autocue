@@ -24,10 +24,10 @@
 		22C0F3712A769A49007D7E48 /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3702A769A49007D7E48 /* HomeCollectionCell.swift */; };
 		22C0F3732A76A837007D7E48 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3722A76A837007D7E48 /* Utils.swift */; };
 		22C0F3752A7A9D6D007D7E48 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3742A7A9D6D007D7E48 /* PlayerManager.swift */; };
-		22C0F3782A7A9F7C007D7E48 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0F3772A7A9F7C007D7E48 /* UIViewController+Extension.swift */; };
 		22C0F37D2A7BEEAA007D7E48 /* 横向视频.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F37A2A7BEEAA007D7E48 /* 横向视频.MP4 */; };
 		22C0F37E2A7BEEAA007D7E48 /* 竖向视频.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F37B2A7BEEAA007D7E48 /* 竖向视频.mp4 */; };
 		22C0F37F2A7BEEAA007D7E48 /* 方形视频.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F37C2A7BEEAA007D7E48 /* 方形视频.MP4 */; };
+		22C5295B2A8679D900CFA96E /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */; };
 		48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,10 +51,10 @@
 		22C0F3702A769A49007D7E48 /* HomeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionCell.swift; sourceTree = "<group>"; };
 		22C0F3722A76A837007D7E48 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		22C0F3742A7A9D6D007D7E48 /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
-		22C0F3772A7A9F7C007D7E48 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		22C0F37A2A7BEEAA007D7E48 /* 横向视频.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "横向视频.MP4"; sourceTree = "<group>"; };
 		22C0F37B2A7BEEAA007D7E48 /* 竖向视频.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "竖向视频.mp4"; sourceTree = "<group>"; };
 		22C0F37C2A7BEEAA007D7E48 /* 方形视频.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "方形视频.MP4"; sourceTree = "<group>"; };
+		22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Extension.swift"; path = "../../../均铭/tenant/Tenant/BPKit/Classes/Extension/UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.release.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.release.xcconfig"; sourceTree = "<group>"; };
 		AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.debug.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.debug.xcconfig"; sourceTree = "<group>"; };
 		F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autocue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,8 +93,8 @@
 		22797C4E2A4880C600EAFB82 /* Autocue */ = {
 			isa = PBXGroup;
 			children = (
+				22C529592A86798500CFA96E /* Extension */,
 				22C0F3792A7BEE94007D7E48 /* Video */,
-				22C0F3762A7A9F6A007D7E48 /* Extension */,
 				22C0F36C2A6EC01D007D7E48 /* Feature */,
 				22C0F3602A6D63C4007D7E48 /* Model */,
 				22C0F3552A6C10C7007D7E48 /* Database */,
@@ -149,14 +149,6 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
-		22C0F3762A7A9F6A007D7E48 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				22C0F3772A7A9F7C007D7E48 /* UIViewController+Extension.swift */,
-			);
-			name = Extension;
-			sourceTree = "<group>";
-		};
 		22C0F3792A7BEE94007D7E48 /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +157,14 @@
 				22C0F37B2A7BEEAA007D7E48 /* 竖向视频.mp4 */,
 			);
 			name = Video;
+			sourceTree = "<group>";
+		};
+		22C529592A86798500CFA96E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		BF57FC70B655C0AD4DB70211 /* Pods */ = {
@@ -306,8 +306,8 @@
 				22C0F3712A769A49007D7E48 /* HomeCollectionCell.swift in Sources */,
 				22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */,
 				22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */,
+				22C5295B2A8679D900CFA96E /* UIViewController+Extension.swift in Sources */,
 				22C0F3692A6EBFB3007D7E48 /* BPSQLManager.swift in Sources */,
-				22C0F3782A7A9F7C007D7E48 /* UIViewController+Extension.swift in Sources */,
 				22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */,
 				22C0F3682A6EBFB3007D7E48 /* BPDatabaseProtocol.swift in Sources */,
 				22C0F36A2A6EBFB3007D7E48 /* BPDatabaseManager.swift in Sources */,

@@ -12,24 +12,23 @@ enum PlayDirection {
     case horizontal, vertical, center
 }
 
-class PlayManager: UIView, AVPictureInPictureControllerDelegate {
-    static let share = PlayManager(frame: .zero)
+class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
+    static let share = PlayManager()
     
     // 播放器
-    private var playerLayer: AVPlayerLayer?
+    private var playerLayer = AVPlayerLayer()
     
     // 画中画
     private var pipController: AVPictureInPictureController?
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    override init() {
+        super.init()
         if AVPictureInPictureController.isPictureInPictureSupported() {
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
             } catch {
                 print(error)
             }
-            let _playerLayer = AVPlayerLayer()
-            _playerLayer.frame = .init(x: 90, y: 90, width: 200, height: 150)
             
             let _mp4Video = Bundle.main.url(forResource: "竖向视频", withExtension: "mp4")
             let _asset = AVAsset.init(url: _mp4Video!)
@@ -38,10 +37,8 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
             let _player = AVPlayer.init(playerItem: _playerItem)
             _player.isMuted = true
             _player.allowsExternalPlayback = true
-            _playerLayer.player = _player
-            _player.play()
-            self.playerLayer = _playerLayer
-            let _pipController = AVPictureInPictureController.init(playerLayer: _playerLayer)!
+            playerLayer.player = _player
+            let _pipController = AVPictureInPictureController.init(playerLayer: playerLayer)!
             // 隐藏播放按钮、快进快退按钮
             _pipController.setValue(1, forKey: "requiresLinearPlayback")
             // 进入后台自动开启画中画（必须处于播放状态）
@@ -55,6 +52,7 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
             setupCustomView()
             NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(handleEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         } else {
             print("不支持画中画")
         }
@@ -69,13 +67,17 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
     }
     
     func play(model: BPCueModel) {
-//        textView.text = model.content
-//        playerLayer?.player?.play()
+        textView.text = model.content
+        playerLayer.player?.play()
         if pipController?.isPictureInPictureActive ?? false {
             pipController?.stopPictureInPicture()
         } else {
             pipController?.startPictureInPicture()
         }
+        playerLayer.frame = UIViewController.currentViewController?.view.bounds ?? UIScreen.main.bounds
+        UIViewController.currentViewController?.view.layer.addSublayer(playerLayer)
+        self.playerLayer.player?.play()
+        
     }
     
     func stop() {
@@ -99,7 +101,7 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
         let asset = AVAsset.init(url: mp4Video!)
         let playerItem = AVPlayerItem.init(asset: asset)
         
-        playerLayer?.player?.replaceCurrentItem(with: playerItem)
+        self.playerLayer.player?.replaceCurrentItem(with: playerItem)
     }
     
     // MARK: - 旋转
@@ -109,20 +111,20 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
         let window = UIApplication.shared.windows.first
         window?.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi * angle))
         
-        let currentItem = playerLayer?.player?.currentItem
+        let currentItem = playerLayer.player?.currentItem
         
         let mp4Video = Bundle.main.url(forResource: "方形视频", withExtension: "mp4")
         let asset = AVAsset.init(url: mp4Video!)
         let playerItem = AVPlayerItem.init(asset: asset)
         
-        playerLayer?.player?.replaceCurrentItem(with: playerItem)
-        playerLayer?.player?.replaceCurrentItem(with: currentItem)
+        playerLayer.player?.replaceCurrentItem(with: playerItem)
+        playerLayer.player?.replaceCurrentItem(with: currentItem)
     }
     
     
-
     
-
+    
+    
     // 你的自定义view
     var customView: UIView!
     var textView: UITextView!
@@ -186,6 +188,11 @@ class PlayManager: UIView, AVPictureInPictureControllerDelegate {
     
     @objc private func handleEnterBackground() {
         print("进入后台");
+    }
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        // 重新开始播放
+        playerLayer.player?.seek(to: CMTime.zero)
+        playerLayer.player?.play()
     }
     
     
