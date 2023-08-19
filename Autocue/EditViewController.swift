@@ -33,23 +33,22 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     
     // MARK: ==== init ====
     private func initUI() {
-        playButton.layer.cornerRadius = playButton.frame.height/2
-        
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
-        textField.layer.cornerRadius = 5
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
-        textView.layer.cornerRadius = 5
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        playButton.layer.cornerRadius   = playButton.frame.height/2
+        textField.layer.borderWidth     = 1
+        textField.layer.borderColor     = UIColor.gray.withAlphaComponent(0.3).cgColor
+        textField.layer.cornerRadius    = 5
+        textView.layer.borderWidth      = 1
+        textView.layer.borderColor      = UIColor.gray.withAlphaComponent(0.3).cgColor
+        textView.layer.cornerRadius     = 5
+        textView.textContainerInset     = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     }
     
     private func initData() {
         textField.text = model.title
         textView.text = model.content
         if textView.text.isEmpty {
-            textView.text = "请输入提示词"
-            textView.textColor = UIColor.lightGray
+            textView.text       = "请输入提示词"
+            textView.textColor  = UIColor.lightGray
         }
     }
     

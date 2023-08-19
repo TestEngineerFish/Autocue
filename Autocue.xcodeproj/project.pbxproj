@@ -28,6 +28,8 @@
 		22C0F37E2A7BEEAA007D7E48 /* 竖向视频.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F37B2A7BEEAA007D7E48 /* 竖向视频.mp4 */; };
 		22C0F37F2A7BEEAA007D7E48 /* 方形视频.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = 22C0F37C2A7BEEAA007D7E48 /* 方形视频.MP4 */; };
 		22C5295B2A8679D900CFA96E /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */; };
+		22C5295D2A8D12F500CFA96E /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C5295C2A8D12F500CFA96E /* ConfigViewController.swift */; };
+		22C529622A8D1BF700CFA96E /* SubtitlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C529612A8D1BF700CFA96E /* SubtitlesView.swift */; };
 		48E9113834E71C15E46E6540 /* Pods_Autocue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		22C0F37B2A7BEEAA007D7E48 /* 竖向视频.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "竖向视频.mp4"; sourceTree = "<group>"; };
 		22C0F37C2A7BEEAA007D7E48 /* 方形视频.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "方形视频.MP4"; sourceTree = "<group>"; };
 		22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Extension.swift"; path = "../../../均铭/tenant/Tenant/BPKit/Classes/Extension/UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		22C5295C2A8D12F500CFA96E /* ConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
+		22C529612A8D1BF700CFA96E /* SubtitlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitlesView.swift; sourceTree = "<group>"; };
 		59DFCCB5C9E9300ADC73BB3D /* Pods-Autocue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.release.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.release.xcconfig"; sourceTree = "<group>"; };
 		AA4D919C3291D2B98A476018 /* Pods-Autocue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autocue.debug.xcconfig"; path = "Target Support Files/Pods-Autocue/Pods-Autocue.debug.xcconfig"; sourceTree = "<group>"; };
 		F587DAC6A9AB6F0F8D4FC004 /* Pods_Autocue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autocue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,9 +137,10 @@
 		22C0F36C2A6EC01D007D7E48 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				22C529602A8D1BD600CFA96E /* PlayerManager */,
+				22C5295F2A8D14F000CFA96E /* Edit */,
+				22C5295E2A8D14DF00CFA96E /* Config */,
 				22C0F36F2A769A34007D7E48 /* Home */,
-				22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */,
-				22C0F3742A7A9D6D007D7E48 /* PlayerManager.swift */,
 			);
 			name = Feature;
 			sourceTree = "<group>";
@@ -165,6 +170,31 @@
 				22C5295A2A8679D900CFA96E /* UIViewController+Extension.swift */,
 			);
 			name = Extension;
+			sourceTree = "<group>";
+		};
+		22C5295E2A8D14DF00CFA96E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				22C5295C2A8D12F500CFA96E /* ConfigViewController.swift */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		22C5295F2A8D14F000CFA96E /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				22C0F36D2A6EC0A2007D7E48 /* EditViewController.swift */,
+			);
+			name = Edit;
+			sourceTree = "<group>";
+		};
+		22C529602A8D1BD600CFA96E /* PlayerManager */ = {
+			isa = PBXGroup;
+			children = (
+				22C0F3742A7A9D6D007D7E48 /* PlayerManager.swift */,
+				22C529612A8D1BF700CFA96E /* SubtitlesView.swift */,
+			);
+			name = PlayerManager;
 			sourceTree = "<group>";
 		};
 		BF57FC70B655C0AD4DB70211 /* Pods */ = {
@@ -311,6 +341,8 @@
 				22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */,
 				22C0F3682A6EBFB3007D7E48 /* BPDatabaseProtocol.swift in Sources */,
 				22C0F36A2A6EBFB3007D7E48 /* BPDatabaseManager.swift in Sources */,
+				22C529622A8D1BF700CFA96E /* SubtitlesView.swift in Sources */,
+				22C5295D2A8D12F500CFA96E /* ConfigViewController.swift in Sources */,
 				22C0F36B2A6EBFB3007D7E48 /* BPIMDBOperator.swift in Sources */,
 				22C0F3752A7A9D6D007D7E48 /* PlayerManager.swift in Sources */,
 				22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */,

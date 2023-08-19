@@ -10,7 +10,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var rightItem: UIBarButtonItem!
     
     private var modelList = [BPCueModel]()
-    private var selectedIdList: Set<String> = []
+    private var selectedList: Set<Int> = []
     
     private var editType: EditType = .normal {
         willSet {
@@ -41,7 +41,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             editType = .edit
         case .edit:
             editType = .normal
-            selectedIdList.removeAll()
+            selectedList.removeAll()
         }
     }
     
@@ -50,10 +50,18 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         case .normal:
             pushEditVC(model: nil)
         case .edit:
-            selectedIdList.forEach { id in
-                BPIMDBOperator.default.deleteCue(id: id)
+            var items = [IndexPath]()
+            selectedList.forEach { index in
+                if index < modelList.count {
+                    let model = modelList[index]
+//                    BPIMDBOperator.default.deleteCue(id: model.id)
+                    items.append(IndexPath(row: index, section: 0))
+                }
             }
-            reloadData()
+            self.collectionView.performBatchUpdates {
+                self.collectionView.deleteItems(at: items)
+            }
+//            reloadData()
             editType = .normal
         }
     }
@@ -86,13 +94,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: ==== Init ====
     private func initUI() {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 15
-        let size = CGSize(width: (collectionView.bounds.width - layout.minimumInteritemSpacing)/2, height: 200)
-        layout.itemSize = size
+        layout.scrollDirection          = .vertical
+        layout.minimumLineSpacing       = 10
+        layout.minimumInteritemSpacing  = 15
+        let contentInset    = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        let size            = CGSize(width: (collectionView.bounds.width - contentInset.left - contentInset.right - layout.minimumInteritemSpacing)/2, height: 200)
+        layout.itemSize                     = size
         collectionView.collectionViewLayout = layout
-        collectionView.contentInset = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        collectionView.contentInset         = contentInset
     }
     private func initData() {
         collectionView.register(HomeCollectionCell.classForCoder(), forCellWithReuseIdentifier: "HomeCollectionCell")
@@ -125,7 +134,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             return UICollectionViewCell()
         }
         let model = modelList[indexPath.row]
-        cell.setData(model: model, isSelected: selectedIdList.contains(model.id))
+        cell.setData(model: model, isSelected: selectedList.contains(indexPath.row))
         return cell
     }
     
@@ -134,14 +143,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         case .normal:
             pushEditVC(model: modelList[indexPath.row])
         case .edit:
-            let id = modelList[indexPath.row].id
-            if selectedIdList.contains(id) {
-                selectedIdList.remove(id)
-                collectionView.deleteItems(at: [indexPath])
+            if selectedList.contains(indexPath.row) {
+                selectedList.remove(indexPath.row)
             } else {
-                selectedIdList.insert(id)
-                collectionView.reloadItems(at: [indexPath])
+                selectedList.insert(indexPath.row)
             }
+            collectionView.reloadItems(at: [indexPath])
         }
     }
 }
