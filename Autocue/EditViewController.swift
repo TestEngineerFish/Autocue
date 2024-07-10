@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
+class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate, PlayManagerOutputProtocol {
     
     @IBOutlet weak var rightBar: UIBarButtonItem!
     
@@ -17,6 +17,8 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     @IBOutlet weak var textField: UITextField!
     
     @IBOutlet weak var textView: UITextView!
+    
+    private let subtitleView = SubtitlesView()
     
     var model = BPCueModel()
     
@@ -50,6 +52,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
             textView.text       = "请输入提示词"
             textView.textColor  = UIColor.lightGray
         }
+        PlayManager.share.delegate = self
     }
     
     // MARK: ==== Event ====
@@ -62,7 +65,7 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     }
 
     @IBAction func play(_ sender: UIButton) {
-        PlayManager.share.play(model: model)
+        PlayManager.share.play()
     }
     
     // MARK: ==== UITextViewDelegate ====
@@ -85,5 +88,23 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     // MARK: ==== UITextField ====
     func textFieldDidEndEditing(_ textField: UITextField) {
         model.title = textField.text ?? ""
+    }
+    
+    // MARK: ==== PlayManagerOutputProtocol ====
+    
+    func getCustomView() -> UIView {
+        return subtitleView
+    }
+
+    func updateState(_ state: PlayState) {
+        switch state {
+        case .play:
+            subtitleView.updateContent(model.content)
+            subtitleView.startTimer()
+        case .stop:
+            subtitleView.stopTimer()
+        case .pause:
+            subtitleView.stopTimer()
+        }
     }
 }

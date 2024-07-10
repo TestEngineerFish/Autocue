@@ -45,6 +45,10 @@ class SubtitlesView: UIView {
         textView.text = value
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("click event!!!!")
+    }
+    
     // 开始滚动
     func startTimer() {
         stopTimer()

@@ -12,24 +12,39 @@ enum PlayDirection {
     case horizontal, vertical, center
 }
 
-protocol PlayManagerInputProtocol: NSObjectProtocol {
-    
-    func getPlayView() -> UIView
-    
-    func play(model: BPCueModel)
+enum PlayState {
+    case play, stop, pause
 }
 
-class PlayManager: NSObject, AVPictureInPictureControllerDelegate, PlayManagerInputProtocol {
+protocol PlayManagerOutputProtocol: NSObjectProtocol {
     
-    static let share: PlayManagerInputProtocol = PlayManager()
+    /// 获取自定义视图
+    func getCustomView() -> UIView
     
-    private let playerView = UIView()
+    /// 更新播放状态
+    func updateState(_ state: PlayState)
+}
+
+class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
+    
+    static let share: PlayManager = PlayManager()
+    
+    var delegate:PlayManagerOutputProtocol?
+    
+    var isPictureInPictureSupported = false
     
     /// 播放器
-    private var playerLayer = AVPlayerLayer()
-    
-    /// 字幕
-    private let subtitlesView = SubtitlesView()
+    private var playerLayer = {
+        let _mp4Video = Bundle.main.url(forResource: "竖向视频", withExtension: "mp4")
+        let _asset = AVAsset.init(url: _mp4Video!)
+        let _playerItem = AVPlayerItem.init(asset: _asset)
+        
+        let _player = AVPlayer.init(playerItem: _playerItem)
+        _player.isMuted = true
+        _player.allowsExternalPlayback = true
+        let layer = AVPlayerLayer(player: _player)
+        return layer
+    }()
     
     /// 画中画
     private var pipController: AVPictureInPictureController?
@@ -46,15 +61,8 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate, PlayManagerIn
     
     // MARK: ==== Init ====
     private func initUI() {
-        let _mp4Video = Bundle.main.url(forResource: "竖向视频", withExtension: "mp4")
-        let _asset = AVAsset.init(url: _mp4Video!)
-        let _playerItem = AVPlayerItem.init(asset: _asset)
-        
-        let _player = AVPlayer.init(playerItem: _playerItem)
-        _player.isMuted = true
-        _player.allowsExternalPlayback = true
-        self.playerLayer.player = _player
         if AVPictureInPictureController.isPictureInPictureSupported() {
+            isPictureInPictureSupported = true
             self.pipController = AVPictureInPictureController.init(playerLayer: playerLayer)
             // 隐藏播放按钮、快进快退按钮
             self.pipController?.setValue(1, forKey: "requiresLinearPlayback")
@@ -65,12 +73,8 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate, PlayManagerIn
                 // Fallback on earlier versions
             }
         } else {
+            isPictureInPictureSupported = false
             print("不支持画中画")
-        }
-        self.playerView.layer.addSublayer(playerLayer)
-        self.playerView.addSubview(subtitlesView)
-        self.subtitlesView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
         }
     }
     
@@ -92,9 +96,7 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate, PlayManagerIn
     // MARK: ==== Event ====
     
     func stop() {
-        if pipController?.isPictureInPictureActive ?? false {
-            pipController?.stopPictureInPicture()
-        }
+        self.pipController?.stopPictureInPicture()
     }
     
     func changeDirection(_ type: PlayDirection) {
@@ -157,49 +159,41 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate, PlayManagerIn
     func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
         // 打印所有window
         print("画中画初始化后：\(UIApplication.shared.windows)")
-        // 注意是 first window
+        guard let _customView = self.delegate?.getCustomView() else {
+            return
+        }
         if let window = UIApplication.shared.windows.first {
-            // 把自定义view加到画中画上
-            window.addSubview(subtitlesView)
+            window.addSubview(_customView)
             // 使用自动布局
-            subtitlesView.snp.remakeConstraints { (make) -> Void in
+            _customView.snp.remakeConstraints { (make) -> Void in
                 make.edges.equalToSuperview()
             }
         }
     }
     
     func pictureInPictureControllerDidStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        subtitlesView.startTimer()
         // 打印所有window
         print("画中画弹出后：\(UIApplication.shared.windows)")
+        self.delegate?.updateState(.play)
     }
     
     func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        subtitlesView.stopTimer()
+        self.delegate?.updateState(.pause)
     }
     
     // MARK: ==== PlayManagerInputProtocol ====
-    func getPlayView() -> UIView {
-        return playerView
-    }
+    //    func getPlayView() -> UIView {
+    //        return playerView
+    //    }
     
-    func play(model: BPCueModel) {
-        self.subtitlesView.updateContent(model.content)
+    func play() {
         self.playerLayer.player?.play()
-        self.subtitlesView.startTimer()
-//        if !isReview {
-//            if self.pipController?.isPictureInPictureActive ?? false {
-//                self.pipController?.stopPictureInPicture()
-//            } else {
-//                self.pipController?.startPictureInPicture()
-//            }
-//        }
-//
-//        if presendBlocK == nil {
-//            self.playerLayer.frame = UIViewController.currentViewController?.view.bounds ?? UIScreen.main.bounds
-//            UIViewController.currentViewController?.view.layer.addSublayer(playerLayer)
-//        } else {
-//            presendBlocK?(self.playerLayer)
-//        }
+        if self.pipController?.isPictureInPictureActive ?? false {
+            self.pipController?.stopPictureInPicture()
+        }
+        self.pipController?.startPictureInPicture()
+        
+        self.playerLayer.frame = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
+        UIViewController.currentViewController?.view.layer.addSublayer(playerLayer)
     }
 }

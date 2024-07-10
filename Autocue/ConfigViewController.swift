@@ -31,18 +31,18 @@ class ConfigViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initUI()
-        PlayManager.share.play(model: testModel)
+        PlayManager.share.play()
     }
     
     // MARK: ==== Init ====
     private func initUI() {
-        self.reviewView = PlayManager.share.getPlayView()
-        self.view.addSubview(reviewView)
-        self.reviewView.backgroundColor = .red
-        self.reviewView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200, height: 200))
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(120)
-        }
+//        self.reviewView = PlayManager.share.getPlayView()
+//        self.view.addSubview(reviewView)
+//        self.reviewView.backgroundColor = .red
+//        self.reviewView.snp.makeConstraints { make in
+//            make.size.equalTo(CGSize(width: 200, height: 200))
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().offset(120)
+//        }
     }
 }
