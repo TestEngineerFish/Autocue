@@ -7,7 +7,12 @@
 
 import UIKit
 
-class SubtitlesView: UIView {
+protocol CustomPipViewProtocol: NSObjectProtocol {
+    func start()
+    func pause()
+}
+
+class SubtitlesView: UIView, CustomPipViewProtocol {
     
     // timer
     private var displayerLink: CADisplayLink?
@@ -17,7 +22,6 @@ class SubtitlesView: UIView {
         textView.text               = ""
         textView.backgroundColor    = .clear
         textView.textColor          = .white
-        textView.font               = .systemFont(ofSize: 16)
         textView.isUserInteractionEnabled = false
         return textView
     }()
@@ -34,15 +38,28 @@ class SubtitlesView: UIView {
     
     // MARK: ==== Init ====
     private func initUI() {
+        self.backgroundColor = .blue
         self.addSubview(textView)
         textView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        if ConfigModel.share.isMirror {
+            textView.transform = CGAffineTransform(scaleX: -1, y: 1)
         }
     }
     
     // MARK: ==== Event ====
     func updateContent(_ value: String) {
-        textView.text = value
+        textView.font = ConfigModel.share.font
+        let mAttrText = NSMutableAttributedString(string: value)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = ConfigModel.share.lineSpacing
+        let kernSpacing = ConfigModel.share.kernSpacing
+        mAttrText.addAttributes([.kern : kernSpacing,
+                                 .foregroundColor : UIColor.white,
+                                 .paragraphStyle : paragraphStyle
+        ], range: NSRange(location: 0, length: mAttrText.length))
+        textView.attributedText = mAttrText
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -51,6 +68,9 @@ class SubtitlesView: UIView {
     
     // 开始滚动
     func startTimer() {
+        guard self.displayerLink?.isPaused ?? true else {
+            return
+        }
         stopTimer()
         displayerLink = CADisplayLink.init(target: self, selector: #selector(move))
         displayerLink?.preferredFramesPerSecond = 30
@@ -74,6 +94,15 @@ class SubtitlesView: UIView {
         if textView.contentOffset.y > textView.contentSize.height {
             textView.contentOffset = .zero
         }
+    }
+    
+    // MARK: ==== CustomPipViewProtocol ====
+    func start() {
+        self.startTimer()
+    }
+    
+    func pause() {
+        self.stopTimer()
     }
     
 }

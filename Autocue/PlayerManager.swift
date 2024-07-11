@@ -16,33 +16,27 @@ enum PlayState {
     case play, stop, pause
 }
 
-protocol PlayManagerOutputProtocol: NSObjectProtocol {
-    
-    /// 获取自定义视图
-    func getCustomView() -> UIView
-    
-    /// 更新播放状态
-    func updateState(_ state: PlayState)
-}
-
 class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
     
     static let share: PlayManager = PlayManager()
     
-    var delegate:PlayManagerOutputProtocol?
     
-    var isPictureInPictureSupported = false
+    var customView: CustomPipViewProtocol?
     
     /// 播放器
-    private var playerLayer = {
-        let _mp4Video = Bundle.main.url(forResource: "竖向视频", withExtension: "mp4")
-        let _asset = AVAsset.init(url: _mp4Video!)
+    private var playerLayer: AVPlayerLayer? = {
+        guard let _mp4Video = ConfigModel.share.viewDirection.videoPath else {
+            print("视频资源不存在")
+            return nil
+        }
+        let _asset = AVAsset.init(url: _mp4Video)
         let _playerItem = AVPlayerItem.init(asset: _asset)
         
-        let _player = AVPlayer.init(playerItem: _playerItem)
+        let _player = AVPlayer(playerItem: _playerItem)
         _player.isMuted = true
         _player.allowsExternalPlayback = true
         let layer = AVPlayerLayer(player: _player)
+        layer.frame = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
         return layer
     }()
     
@@ -59,11 +53,15 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        // 移除 KVO 观察者
+        self.playerLayer?.player?.removeObserver(self, forKeyPath: "timeControlStatus")
+    }
+    
     // MARK: ==== Init ====
     private func initUI() {
-        if AVPictureInPictureController.isPictureInPictureSupported() {
-            isPictureInPictureSupported = true
-            self.pipController = AVPictureInPictureController.init(playerLayer: playerLayer)
+        if AVPictureInPictureController.isPictureInPictureSupported(), let layer = self.playerLayer {
+            self.pipController = AVPictureInPictureController.init(playerLayer: layer)
             // 隐藏播放按钮、快进快退按钮
             self.pipController?.setValue(1, forKey: "requiresLinearPlayback")
             // 进入后台自动开启画中画（必须处于播放状态）
@@ -73,7 +71,6 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
                 // Fallback on earlier versions
             }
         } else {
-            isPictureInPictureSupported = false
             print("不支持画中画")
         }
     }
@@ -87,53 +84,40 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
         self.pipController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: AVPlayerItem.didPlayToEndTimeNotification, object: nil)
         UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(UIBackgroundTaskIdentifier.invalid)
         }
+        self.playerLayer?.player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .old], context: nil)
     }
     
     // MARK: ==== Event ====
     
-    func stop() {
-        self.pipController?.stopPictureInPicture()
-    }
-    
-    func changeDirection(_ type: PlayDirection) {
-        // 窗口形状由视频形状决定
-        var videoName = ""
-        switch type {
-        case .horizontal:
-            videoName = "横向视频"
-        case .vertical:
-            videoName = "竖向视频"
-        case .center:
-            videoName = "方形视频"
-        }
-        guard let mp4Video = Bundle.main.url(forResource: videoName, withExtension: "mp4") else {
+    func play(_ view: CustomPipViewProtocol?) {
+        guard let _playerLayer = self.playerLayer else {
             return
         }
-        let asset = AVAsset.init(url: mp4Video)
-        let playerItem = AVPlayerItem.init(asset: asset)
+        if _playerLayer.superlayer != nil {
+            _playerLayer.removeFromSuperlayer()
+        }
+        self.customView = view
         
-        self.playerLayer.player?.replaceCurrentItem(with: playerItem)
-    }
-    
-    // MARK: - 旋转
-    private var angle: Double = 0
-    @objc private func rotate() {
-        angle = angle + 0.5
-        let window = UIApplication.shared.windows.first
-        window?.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi * angle))
+        _playerLayer.player?.play()
         
-        let currentItem = playerLayer.player?.currentItem
-        
-        let mp4Video = Bundle.main.url(forResource: "方形视频", withExtension: "mp4")
-        let asset = AVAsset.init(url: mp4Video!)
-        let playerItem = AVPlayerItem.init(asset: asset)
-        
-        playerLayer.player?.replaceCurrentItem(with: playerItem)
-        playerLayer.player?.replaceCurrentItem(with: currentItem)
+        if self.pipController?.isPictureInPictureActive ?? false {
+            self.pipController?.stopPictureInPicture()
+        }
+        UIViewController.currentViewController?.view.layer.addSublayer(_playerLayer)
+        self.pipController?.startPictureInPicture()
+                if _playerLayer.player?.rate != 0 {
+                    guard let _mp4Video = ConfigModel.share.viewDirection.videoPath else {
+                        print("视频资源不存在")
+                        return
+                    }
+                    let _asset = AVAsset.init(url: _mp4Video)
+                    let _avPlayerItem = AVPlayerItem(asset: _asset)
+                    _playerLayer.player?.replaceCurrentItem(with: _avPlayerItem)
+                }
     }
     
     // MARK: ==== Notification ====
@@ -148,21 +132,31 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
     
     @objc func playerDidFinishPlaying(note: NSNotification) {
         // 重新开始播放
-        playerLayer.player?.seek(to: CMTime.zero)
-        playerLayer.player?.play()
+        self.playerLayer?.player?.seek(to: CMTime.zero)
+        self.playerLayer?.player?.play()
     }
     
+    // MARK: ==== KVO ====
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if keyPath == "timeControlStatus" {
+                if self.playerLayer?.player?.timeControlStatus == .paused {
+                    self.customView?.pause()
+                } else if self.playerLayer?.player?.timeControlStatus == .playing {
+                    self.customView?.start()
+                }
+            }
+        }
     
     // MARK: ==== AVPictureInPictureControllerDelegate ====
     
     // 画中画将要弹出
     func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        // 打印所有window
-        print("画中画初始化后：\(UIApplication.shared.windows)")
-        guard let _customView = self.delegate?.getCustomView() else {
+        guard let _customView = self.customView as? UIView else {
             return
         }
+        _customView.tag = -1
         if let window = UIApplication.shared.windows.first {
+            window.subviews.first(where: { $0.tag == -1 })?.removeFromSuperview()
             window.addSubview(_customView)
             // 使用自动布局
             _customView.snp.remakeConstraints { (make) -> Void in
@@ -174,26 +168,23 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
     func pictureInPictureControllerDidStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
         // 打印所有window
         print("画中画弹出后：\(UIApplication.shared.windows)")
-        self.delegate?.updateState(.play)
+        self.customView?.start()
+    }
+    
+    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, failedToStartPictureInPictureWithError error: Error) {
+        print("画中画播放失败")
+    }
+    
+    func pictureInPictureControllerWillStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("画中画 将要停止")
+        self.customView?.pause()
     }
     
     func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        self.delegate?.updateState(.pause)
+        print("画中画 已停止")
     }
     
-    // MARK: ==== PlayManagerInputProtocol ====
-    //    func getPlayView() -> UIView {
-    //        return playerView
-    //    }
-    
-    func play() {
-        self.playerLayer.player?.play()
-        if self.pipController?.isPictureInPictureActive ?? false {
-            self.pipController?.stopPictureInPicture()
-        }
-        self.pipController?.startPictureInPicture()
-        
-        self.playerLayer.frame = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
-        UIViewController.currentViewController?.view.layer.addSublayer(playerLayer)
+    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        print("画中画 关闭")
     }
 }
