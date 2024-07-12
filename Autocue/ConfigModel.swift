@@ -12,55 +12,59 @@ class ConfigModel  {
     private let config = UserDefaults(suiteName: "config")
     
     enum ViewDirection: Int {
-        case horizontal, vertical
+        case vertical, horizontal
         var videoPath: URL? {
             switch self {
-            case .horizontal:
-                return Bundle.main.url(forResource: "vertical", withExtension: "mp4")
             case .vertical:
+                return Bundle.main.url(forResource: "vertical", withExtension: "mp4")
+            case .horizontal:
                 return Bundle.main.url(forResource: "horizontal", withExtension: "mp4")
             }
         }
     }
     
-    /// 字体大小
-    var font: UIFont {
+    /// 字体大小比例
+    var fontScale: CGFloat {
         get {
-            let font = config?.value(forKey: "font") as? CGFloat ?? 15
-            return UIFont.systemFont(ofSize: font)
+            let value = config?.value(forKey: "font_scale") as? CGFloat ?? 0.5
+            return value
         }
         set {
-            config?.setValue(newValue.pointSize, forKey: "font")
+            let value = max(0.1, newValue)
+            config?.setValue(value, forKey: "font_scale")
         }
     }
     
     /// 字间距
-    var kernSpacing: CGFloat {
+    var kernScale: CGFloat {
         get {
-            return config?.value(forKey: "kern_spacing") as? CGFloat ?? 1.0
+            return config?.value(forKey: "kern_scale") as? CGFloat ?? 0.5
         }
         set {
-            config?.setValue(newValue, forKey: "kern_spacing")
+            let value = max(0.1, newValue)
+            config?.setValue(value, forKey: "kern_scale")
         }
     }
     
     /// 行间距
-    var lineSpacing: CGFloat {
+    var lineScale: CGFloat {
         get {
-            return config?.value(forKey: "line_spacing") as? CGFloat ?? 1.0
+            return config?.value(forKey: "line_scale") as? CGFloat ?? 0.5
         }
         set {
-            config?.setValue(newValue, forKey: "line_spacing")
+            let value = max(0.1, newValue)
+            config?.setValue(value, forKey: "line_scale")
         }
     }
     
     /// 滚动速度
-    var scrollSpeed: Float {
+    var speedScale: CGFloat {
         get {
-            return config?.value(forKey: "speed") as? Float ?? 1.0
+            return config?.value(forKey: "speed_scale") as? CGFloat ?? 0.5
         }
         set {
-            config?.setValue(newValue, forKey: "speed")
+            let value = max(0.1, newValue)
+            config?.setValue(value, forKey: "speed_scale")
         }
     }
     

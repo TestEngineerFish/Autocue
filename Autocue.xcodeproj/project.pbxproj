@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		22087FC92C3FC35A0008A4A6 /* vertical.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22087FC72C3FC35A0008A4A6 /* vertical.mp4 */; };
 		22087FCA2C3FC35A0008A4A6 /* horizontal.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 22087FC82C3FC35A0008A4A6 /* horizontal.mp4 */; };
+		22087FCC2C40E6390008A4A6 /* AtTableBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22087FCB2C40E6390008A4A6 /* AtTableBarViewController.swift */; };
+		22087FCE2C4104610008A4A6 /* AtViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22087FCD2C4104610008A4A6 /* AtViewController.swift */; };
 		22797C502A4880C600EAFB82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C4F2A4880C600EAFB82 /* AppDelegate.swift */; };
 		22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C512A4880C600EAFB82 /* SceneDelegate.swift */; };
 		22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22797C532A4880C600EAFB82 /* HomeViewController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		22087FC72C3FC35A0008A4A6 /* vertical.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = vertical.mp4; path = Assets/vertical.mp4; sourceTree = "<group>"; };
 		22087FC82C3FC35A0008A4A6 /* horizontal.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = horizontal.mp4; path = Assets/horizontal.mp4; sourceTree = "<group>"; };
+		22087FCB2C40E6390008A4A6 /* AtTableBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtTableBarViewController.swift; sourceTree = "<group>"; };
+		22087FCD2C4104610008A4A6 /* AtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtViewController.swift; sourceTree = "<group>"; };
 		22797C4C2A4880C600EAFB82 /* Autocue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Autocue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22797C4F2A4880C600EAFB82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22797C512A4880C600EAFB82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				22C0F3552A6C10C7007D7E48 /* Database */,
 				22797C4F2A4880C600EAFB82 /* AppDelegate.swift */,
 				22797C512A4880C600EAFB82 /* SceneDelegate.swift */,
+				22087FCB2C40E6390008A4A6 /* AtTableBarViewController.swift */,
+				22087FCD2C4104610008A4A6 /* AtViewController.swift */,
 				22797C552A4880C600EAFB82 /* Main.storyboard */,
 				22797C582A4880C700EAFB82 /* Assets.xcassets */,
 				22797C5A2A4880C700EAFB82 /* LaunchScreen.storyboard */,
@@ -330,6 +336,7 @@
 			files = (
 				22C0F3712A769A49007D7E48 /* HomeCollectionCell.swift in Sources */,
 				22C0F36E2A6EC0A2007D7E48 /* EditViewController.swift in Sources */,
+				22087FCC2C40E6390008A4A6 /* AtTableBarViewController.swift in Sources */,
 				22797C542A4880C600EAFB82 /* HomeViewController.swift in Sources */,
 				22C5295B2A8679D900CFA96E /* UIViewController+Extension.swift in Sources */,
 				22C0F3692A6EBFB3007D7E48 /* BPSQLManager.swift in Sources */,
@@ -340,6 +347,7 @@
 				22C5295D2A8D12F500CFA96E /* ConfigViewController.swift in Sources */,
 				22C0F36B2A6EBFB3007D7E48 /* BPIMDBOperator.swift in Sources */,
 				22C0F3752A7A9D6D007D7E48 /* PlayerManager.swift in Sources */,
+				22087FCE2C4104610008A4A6 /* AtViewController.swift in Sources */,
 				22797C522A4880C600EAFB82 /* SceneDelegate.swift in Sources */,
 				22797C662A530B6700EAFB82 /* PlayVideo.swift in Sources */,
 				22C0F3622A6D63D7007D7E48 /* BPCueModel.swift in Sources */,

@@ -10,7 +10,7 @@ import SnapKit
 
 import UIKit
 
-class ConfigViewController: UIViewController {
+class ConfigViewController: AtViewController {
     
     private let testContent: String = """
             
@@ -24,7 +24,7 @@ class ConfigViewController: UIViewController {
             
             """
     // UI Elements
-    let subtitleView = SubtitlesView(frame: CGRect(origin: .zero, size: CGSize(width: 200, height: 20)))
+    let subtitleView = SubtitlesView()
     let fontSlider = UISlider()
     let kernSpacingSlider = UISlider()
     let lineSpacingSlider = UISlider()
@@ -36,7 +36,8 @@ class ConfigViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        subtitleView.updateContent(testContent)
+        subtitleView.start()
         // Setup UI
         setupUI()
         loadConfig()
@@ -51,11 +52,14 @@ class ConfigViewController: UIViewController {
         reviewButton.addTarget(self, action: #selector(reviewAction(_:)), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     // Setup UI Elements
     private func setupUI() {
-        view.backgroundColor = .red
         let stackView = UIStackView(arrangedSubviews: [
-            createSubtitle(subtitleView),
             createLabelWithSlider(name: "字体大小", slider: fontSlider),
             createLabelWithSlider(name: "文字间距", slider: kernSpacingSlider),
             createLabelWithSlider(name: "行内间距", slider: lineSpacingSlider),
@@ -67,39 +71,35 @@ class ConfigViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(subtitleView)
         view.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
+        subtitleView.snp.remakeConstraints { make in
+            make.top.equalToSuperview().offset(68)
+            make.centerX.equalToSuperview()
+            if ConfigModel.share.viewDirection == .vertical {
+                make.size.equalTo(CGSize(width: 150, height: 300))
+            } else {
+                make.size.equalTo(CGSize(width: view.frame.size.width - 30, height: 200))
+            }
+        }
+        stackView.sizeToFit()
+        stackView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-120)
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(15)
+            make.right.equalToSuperview().offset(-15)
+        }
     }
     
     // Load Config Values
     private func loadConfig() {
         let config = ConfigModel.share
-        fontSlider.value = Float(config.font.pointSize)
-        kernSpacingSlider.value = Float(config.kernSpacing)
-        lineSpacingSlider.value = Float(config.lineSpacing)
-        scrollSpeedSlider.value = config.scrollSpeed
-        mirrorSwitch.isOn = config.isMirror
+        fontSlider.value        = Float(config.fontScale)
+        kernSpacingSlider.value = Float(config.kernScale)
+        lineSpacingSlider.value = Float(config.lineScale)
+        scrollSpeedSlider.value = Float(config.speedScale)
+        mirrorSwitch.isOn       = config.isMirror
         viewDirectionSegmentedControl.selectedSegmentIndex = config.viewDirection.rawValue
-    }
-    
-    private func createSubtitle(_ subtitle: SubtitlesView) -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.backgroundColor = .black
-//        let label = UILabel()
-//        label.text = "name"
-        subtitle.frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 20))
-//        subtitle.updateContent(testContent)
-        stackView.addArrangedSubview(subtitle)
-//        stackView.frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 200))
-        return stackView
     }
     
     // Create Label with Slider
@@ -153,34 +153,44 @@ class ConfigViewController: UIViewController {
     
     // Slider Actions
     @objc private func fontSliderChanged(_ sender: UISlider) {
-        let fontSize = CGFloat(sender.value)
-        ConfigModel.share.font = UIFont.systemFont(ofSize: fontSize)
+        ConfigModel.share.fontScale = CGFloat(sender.value)
+        subtitleView.syncStyle()
     }
     
     @objc private func kernSpacingSliderChanged(_ sender: UISlider) {
-        let kernSpacing = CGFloat(sender.value)
-        ConfigModel.share.kernSpacing = kernSpacing
+        ConfigModel.share.kernScale = CGFloat(sender.value)
+        subtitleView.syncStyle()
     }
     
     @objc private func lineSpacingSliderChanged(_ sender: UISlider) {
-        let lineSpacing = CGFloat(sender.value)
-        ConfigModel.share.lineSpacing = lineSpacing
+        ConfigModel.share.lineScale = CGFloat(sender.value)
+        subtitleView.syncStyle()
     }
     
     @objc private func scrollSpeedSliderChanged(_ sender: UISlider) {
-        let scrollSpeed = sender.value
-        ConfigModel.share.scrollSpeed = scrollSpeed
+        ConfigModel.share.speedScale = CGFloat(sender.value)
+        subtitleView.syncStyle()
     }
     
     // Switch Action
     @objc private func mirrorSwitchChanged(_ sender: UISwitch) {
         ConfigModel.share.isMirror = sender.isOn
+        subtitleView.syncStyle()
     }
     
     // Segmented Control Action
     @objc private func viewDirectionChanged(_ sender: UISegmentedControl) {
         if let viewDirection = ConfigModel.ViewDirection(rawValue: sender.selectedSegmentIndex) {
             ConfigModel.share.viewDirection = viewDirection
+            subtitleView.snp.remakeConstraints { make in
+                make.top.equalToSuperview().offset(68)
+                make.centerX.equalToSuperview()
+                if viewDirection == .vertical {
+                    make.size.equalTo(CGSize(width: 150, height: 300))
+                } else {
+                    make.size.equalTo(CGSize(width: view.frame.size.width - 30, height: 200))
+                }
+            }
         }
     }
     

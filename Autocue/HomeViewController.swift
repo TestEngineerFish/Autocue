@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class HomeViewController: AtViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     enum EditType {
         case normal, edit
@@ -32,6 +32,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         self.reloadData()
     }
     

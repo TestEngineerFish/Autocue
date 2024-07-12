@@ -16,12 +16,12 @@ class SubtitlesView: UIView, CustomPipViewProtocol {
     
     // timer
     private var displayerLink: CADisplayLink?
+    private var offsetStep: CGFloat = 1
     
     private var textView: UITextView = {
         let textView = UITextView()
         textView.text               = ""
-        textView.backgroundColor    = .clear
-        textView.textColor          = .white
+        textView.backgroundColor    = .black
         textView.isUserInteractionEnabled = false
         return textView
     }()
@@ -38,34 +38,36 @@ class SubtitlesView: UIView, CustomPipViewProtocol {
     
     // MARK: ==== Init ====
     private func initUI() {
-        self.backgroundColor = .blue
+        self.backgroundColor = .black
         self.addSubview(textView)
         textView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
-        }
-        if ConfigModel.share.isMirror {
-            textView.transform = CGAffineTransform(scaleX: -1, y: 1)
         }
     }
     
     // MARK: ==== Event ====
     func updateContent(_ value: String) {
-        textView.font = ConfigModel.share.font
-        let mAttrText = NSMutableAttributedString(string: value)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = ConfigModel.share.lineSpacing
-        let kernSpacing = ConfigModel.share.kernSpacing
-        mAttrText.addAttributes([.kern : kernSpacing,
-                                 .foregroundColor : UIColor.white,
-                                 .paragraphStyle : paragraphStyle
+        self.offsetStep             = ConfigModel.share.speedScale * 5
+        let mAttrText               = NSMutableAttributedString(string: value)
+        let paragraphStyle          = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing  = ConfigModel.share.lineScale * 10
+        let kernSpacing             = ConfigModel.share.kernScale * 10
+        let fontSize                = UIFont.systemFont(ofSize: ConfigModel.share.fontScale * 30)
+        mAttrText.addAttributes([.kern              : kernSpacing,
+                                 .foregroundColor   : UIColor.white,
+                                 .paragraphStyle    : paragraphStyle,
+                                 .font              : fontSize,
         ], range: NSRange(location: 0, length: mAttrText.length))
-        textView.attributedText = mAttrText
+        self.textView.attributedText = mAttrText
+        if ConfigModel.share.isMirror {
+            textView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("click event!!!!")
+    func syncStyle() {
+        updateContent(textView.attributedText.string)
     }
-    
+
     // 开始滚动
     func startTimer() {
         guard self.displayerLink?.isPaused ?? true else {
@@ -90,7 +92,7 @@ class SubtitlesView: UIView, CustomPipViewProtocol {
     
     @objc private func move() {
         let offsetY = textView.contentOffset.y
-        textView.contentOffset = .init(x: 0, y: offsetY + 1)
+        textView.contentOffset = .init(x: 0, y: offsetY + self.offsetStep)
         if textView.contentOffset.y > textView.contentSize.height {
             textView.contentOffset = .zero
         }

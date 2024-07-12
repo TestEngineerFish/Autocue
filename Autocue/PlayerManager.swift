@@ -25,14 +25,7 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
     
     /// 播放器
     private var playerLayer: AVPlayerLayer? = {
-        guard let _mp4Video = ConfigModel.share.viewDirection.videoPath else {
-            print("视频资源不存在")
-            return nil
-        }
-        let _asset = AVAsset.init(url: _mp4Video)
-        let _playerItem = AVPlayerItem.init(asset: _asset)
-        
-        let _player = AVPlayer(playerItem: _playerItem)
+        let _player = AVPlayer()
         _player.isMuted = true
         _player.allowsExternalPlayback = true
         let layer = AVPlayerLayer(player: _player)
@@ -100,24 +93,20 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
         if _playerLayer.superlayer != nil {
             _playerLayer.removeFromSuperlayer()
         }
+        UIViewController.currentViewController?.view.layer.addSublayer(_playerLayer)
         self.customView = view
-        
-        _playerLayer.player?.play()
-        
         if self.pipController?.isPictureInPictureActive ?? false {
             self.pipController?.stopPictureInPicture()
         }
-        UIViewController.currentViewController?.view.layer.addSublayer(_playerLayer)
         self.pipController?.startPictureInPicture()
-                if _playerLayer.player?.rate != 0 {
-                    guard let _mp4Video = ConfigModel.share.viewDirection.videoPath else {
-                        print("视频资源不存在")
-                        return
-                    }
-                    let _asset = AVAsset.init(url: _mp4Video)
-                    let _avPlayerItem = AVPlayerItem(asset: _asset)
-                    _playerLayer.player?.replaceCurrentItem(with: _avPlayerItem)
-                }
+        guard let _mp4Video = ConfigModel.share.viewDirection.videoPath else {
+            print("视频资源不存在")
+            return
+        }
+        let _asset = AVAsset.init(url: _mp4Video)
+        let _avPlayerItem = AVPlayerItem(asset: _asset)
+        _playerLayer.player?.replaceCurrentItem(with: _avPlayerItem)
+        _playerLayer.player?.play()
     }
     
     // MARK: ==== Notification ====
@@ -138,14 +127,14 @@ class PlayManager: NSObject, AVPictureInPictureControllerDelegate {
     
     // MARK: ==== KVO ====
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-            if keyPath == "timeControlStatus" {
-                if self.playerLayer?.player?.timeControlStatus == .paused {
-                    self.customView?.pause()
-                } else if self.playerLayer?.player?.timeControlStatus == .playing {
-                    self.customView?.start()
-                }
+        if keyPath == "timeControlStatus" {
+            if self.playerLayer?.player?.timeControlStatus == .paused {
+                self.customView?.pause()
+            } else if self.playerLayer?.player?.timeControlStatus == .playing {
+                self.customView?.start()
             }
         }
+    }
     
     // MARK: ==== AVPictureInPictureControllerDelegate ====
     

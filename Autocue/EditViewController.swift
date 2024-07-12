@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
+class EditViewController: AtViewController, UITextViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var rightBar: UIBarButtonItem!
     
@@ -50,6 +50,11 @@ class EditViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
             textView.text       = "请输入提示词"
             textView.textColor  = UIColor.lightGray
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: ==== Event ====
